@@ -36,7 +36,7 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
         the length\nof the labels ({})".format(arrow, N))
     
     # If colors is a string, we assume it's a matplotlib colormap. 
-    # Else if it's a list, this checks if the number of labels is equal to the number of colors
+    # Else, if it's a list, this checks if the number of labels is equal to the number of colors
     if isinstance(colors, str):
         cmap = cm.get_cmap(colors, N)
         cmap = cmap(np.arange(N))
@@ -48,7 +48,7 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
             raise Exception("\n\nnumber of colors {} not equal \
             to number of categories{}\n".format(len(colors), N))
   
-    # This plots the gauage
+    # This plots the gauge
     fig, ax = plt.subplots()
     fig.set_facecolor("black")
     ang_range, mid_points = degree_range(N)
@@ -94,7 +94,7 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
     ax.axis('equal')
     plt.tight_layout()
     
-    # If file name has been specified (which it is by default) then same gauge as image 
+    # If file name has been specified (which it is by default) then save gauge as image 
     if fname:
         fig.savefig(fname, dpi=200, facecolor="white")
 

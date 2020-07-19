@@ -26,7 +26,7 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
           arrow=1, \
           fname="pmConcentrationIndex.png"): 
     """ 
-    This function plots the gauge; including labels, arrow, gauage title, colours, sectors and so on. 
+    This function plots the gauge; including labels, arrow, gauge title, colors, sectors and so on. 
     """
     
     N = len(labels)

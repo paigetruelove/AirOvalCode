@@ -7,6 +7,7 @@ from auth import (
     access_token_secret
 )
 
+import gauge_maker
 import random # Importing the Random module to randomise the daily Twitter messages 
 import graph_maker # Importing the file "graph_maker" where the fuction "create_graph" can be found 
 import sys
@@ -16,6 +17,12 @@ print("Working over " + str(days) + " days")
 graph_maker.getdata(days)
 
 print("Composing Tweet")
+twitter = Twython(
+    consumer_key,
+    consumer_secret,
+    access_token,
+    access_token_secret
+)
 
 if (days == 1):
     # Writing the text for the daily Tweet 
@@ -25,8 +32,22 @@ if (days == 1):
                 "Good Morning! Here's your daily graph:"]
     message = random.choice(messages)
     
-    # Opening image of graph 
+    # Opening image of daily graph 
     image = open('dailymagraph.png', 'rb')
+    
+    # Uploading daily graph to Twitter 
+    response = twitter.upload_media(media=image)
+    graph_id = [response['media_id']]
+    
+    # Creating image of daily gauge 
+    gauge_maker.create_daily_gauge()
+    image = open('pmConcentrationIndex.png', 'rb')
+    
+    # Uploading daily gauge to Twitter
+    response = twitter.upload_media(media=image)
+    gauge_id = [response['media_id']]
+    
+    media_id = graph_id + gauge_id
     
 if (days == 7):
     # Writing the text for the weekly Tweet 
@@ -35,20 +56,16 @@ if (days == 7):
                 "Happy Monday! Here's your weekly graph:"]
     message = random.choice(messages)
     
-    # Opening image of graph 
+    # Opening image of weekly graph 
     image = open('weeklygraphwithma.png', 'rb')
+    
+    # Uploading weekly graph to Twitter 
+    response = twitter.upload_media(media=image)
+    media_id = [response['media_id']]
 
 print(message)
-twitter = Twython(
-    consumer_key,
-    consumer_secret,
-    access_token,
-    access_token_secret
-)
 
-# Uploading image of graph to Twitter
-response = twitter.upload_media(media=image)
-media_id = [response['media_id']]
+# Sending Tweet 
 twitter.update_status(status=message, media_ids=media_id)
 
 print("Tweeted Sucessfully")

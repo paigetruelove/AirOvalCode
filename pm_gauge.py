@@ -8,6 +8,8 @@ import numpy as np
 import datetime
 from matplotlib.patches import Circle, Wedge, Rectangle # Importing the individual shapes which are used to make the gauges 
 
+plt.style.use('dark_background')
+
 def degree_range(n): 
     """
     This function calculates basic trigonometry to draw the sectors of the gauges. 
@@ -22,7 +24,7 @@ def rot_text(ang):
     rotation = np.degrees(np.radians(ang) * np.pi / np.pi - np.radians(90))
     return rotation
 
-def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
+def gauge(labels = ['V.LOW','LOW','AVERAGE','HIGH','V.HIGH'], \
           colors1= "Oranges_r", \
           colors2= "Blues_r", \
           title1 = 'PM 10', \
@@ -73,7 +75,7 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
 
     # This plots the two gauges
     fig, ax = plt.subplots(1, 2)
-    fig.suptitle("Weekly Average PM Concentration Gauge", y=0.9, fontsize=14, fontweight='bold')
+    fig.suptitle("Daily PM Concentration Gauge", y=0.9, fontsize=14, fontweight='bold')
     fig.set_facecolor("white")
     ang_range, mid_points = degree_range(N)
     labels = labels[::-1]
@@ -100,11 +102,11 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
     # This sets the labels (e.g. 'V.LOW','LOW',...)
     for mid, lab in zip(mid_points, labels): 
         ax[0].text(0.35 * np.cos(np.radians(mid)), 0.35 * np.sin(np.radians(mid)), lab, \
-            horizontalalignment='center', verticalalignment='center', fontsize=7, \
+            horizontalalignment='center', verticalalignment='center', color="black", fontsize=7, \
             fontweight='bold', rotation = rot_text(mid))
         
         ax[1].text(0.35 * np.cos(np.radians(mid)), 0.35 * np.sin(np.radians(mid)), lab, \
-            horizontalalignment='center', verticalalignment='center', fontsize=7, \
+            horizontalalignment='center', verticalalignment='center', color="black", fontsize=7, \
             fontweight='bold', rotation = rot_text(mid))
 
 
@@ -113,13 +115,13 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
     r = Rectangle((-0.4,-0.1),0.8,0.1, facecolor='lightgray', lw=1, ec="black")
     ax[0].add_patch(r)
     ax[0].text(0, -0.05, title1, horizontalalignment='center', \
-         verticalalignment='center', fontsize=14, fontweight='bold')
+         verticalalignment='center', fontsize=14, color="black", fontweight='bold')
     
     # Gauge 2
     r = Rectangle((-0.4,-0.1),0.8,0.1, facecolor='lightgray', lw=1, ec="black")
     ax[1].add_patch(r)
     ax[1].text(0, -0.05, title2, horizontalalignment='center', \
-         verticalalignment='center', fontsize=14, fontweight='bold')
+         verticalalignment='center', fontsize=14, color="black", fontweight='bold')
 
 
     # This plots the arrows
@@ -154,4 +156,4 @@ def gauge(labels = ['V.LOW','LOW','MODERATE','HIGH','V.HIGH'], \
     
     # If file name has been specified (which it is by default) then save gauges as image 
     if fname:
-        fig.savefig(fname, dpi=200, facecolor="white")
+        fig.savefig(fname, dpi=200, facecolor="black")

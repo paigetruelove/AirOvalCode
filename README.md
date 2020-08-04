@@ -16,9 +16,10 @@ So far, these are the visualisations which I've created:
 
 The code for these graphs can be viewed in graph_maker.py 
 
-* A PM Concentration Index: This has yet to be automated, but the gauge visualises the severity of PM concentration. 
+* PM Concentration Indexes: Two automated gauges which visualise the severity of PM 2.5/10 concentrations. The daily gauges work by calculating how yesterday's data compares to all historical data points recorded by my SDS011 sensor. As the data is highly localised, I do not want to compare it against official PM statistics for London.
 
 The code for the gauge can be viewed in gauge.py 
+The code for automating the gauge can be viewed in gauge_maker.py
 
 I have also published the code which reads data from the sensor, and saves the data to a CSV file and the MySQL database. This can be viewed in home_air_qual_data.py
 

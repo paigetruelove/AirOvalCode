@@ -7,17 +7,17 @@ import pm_gauge
 def create_daily_gauge():
     plt.style.use('dark_background')
 
-    publishData = pd.read_csv("home_air_qual_publishdata.csv", parse_dates=["datetime"])
+    publishData = pd.read_csv("~/Desktop/home_air_qual_publishdata.csv", parse_dates=["datetime"])
 
     # Removing any sensor errors i.e. readings greater than 100 
     publishData = publishData[publishData["pmten"] <100]
     publishData = publishData[publishData["pmtwofive"] <100]
 
     # Calculating the quartiles (20%, 40%... etc.)
-    q20 = publishData.quantile(q=0.2)
-    q40 = publishData.quantile(q=0.4)
-    q60 = publishData.quantile(q=0.6)
-    q80 = publishData.quantile(q=0.8)
+    q10 = publishData.quantile(q=0.10)
+    q25 = publishData.quantile(q=0.25)
+    q75 = publishData.quantile(q=0.75)
+    q90 = publishData.quantile(q=0.90)
 
     # Getting yesterday's data (midnight - midnight)
     midnight = datetime.time(0,0,0)
@@ -32,24 +32,24 @@ def create_daily_gauge():
     dailyMean = plotPublishData.mean()
 
     # Logic behind where the arrow points on each PM gauge
-    if dailyMean["pmten"] < q20["pmten"]: 
+    if dailyMean["pmten"] < q10["pmten"]: 
         arrow1 = 1 
-    elif dailyMean["pmten"] < q40["pmten"]:
+    elif dailyMean["pmten"] < q25["pmten"]:
         arrow1 = 2
-    elif dailyMean["pmten"] < q60["pmten"]: 
+    elif dailyMean["pmten"] < q75["pmten"]: 
         arrow1 = 3
-    elif dailyMean["pmten"] < q80["pmten"]:
+    elif dailyMean["pmten"] < q90["pmten"]:
         arrow1 = 4
     else:
         arrow1 = 5
 
-    if dailyMean["pmtwofive"] < q20["pmtwofive"]: 
+    if dailyMean["pmtwofive"] < q10["pmtwofive"]: 
         arrow2 = 1 
-    elif dailyMean["pmtwofive"] < q40["pmtwofive"]:
+    elif dailyMean["pmtwofive"] < q25["pmtwofive"]:
         arrow2 = 2
-    elif dailyMean["pmtwofive"] < q60["pmtwofive"]: 
+    elif dailyMean["pmtwofive"] < q75["pmtwofive"]: 
         arrow2 = 3
-    elif dailyMean["pmtwofive"] < q80["pmtwofive"]:
+    elif dailyMean["pmtwofive"] < q90["pmtwofive"]:
         arrow2 = 4
     else:
         arrow2 = 5
